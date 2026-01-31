@@ -1,0 +1,56 @@
+---
+- name: Install and configure nginx
+  hosts: nginx
+  become: true
+  # vars: 
+  #   web_server: "nginx"
+  #   website: "test.sothy.site"
+  tasks:
+    - name: send a message to chat in playbook
+      community.general.telegram:
+        token: "8567963411:AAF6c1uoaVPazm-WY6VkY-7yuG7WYRtDrRE"
+        api_args:
+          chat_id: "-5196312295"
+          parse_mode: "html"
+          text: "Start to deploy project employee-api on branch master on environment uat with url https://gitlab.com/devops/employee-api.git by devops."
+          disable_web_page_preview: True
+    - name: Execute whoami command and register output
+      ansible.builtin.command: whoami
+      register: username_on_the_host
+    - name: Display the username
+      debug:
+        msg: "The current user is {{ username_on_the_host.stdout }}"
+
+    - name: install tools
+      apt: 
+        name: "{{ item }}"
+        state: present
+      loop:
+        - net-tools
+        - curl
+
+    - name: install nginx
+      apt: 
+        name: "{{ web_server }}"
+        state: present
+    
+    - name: copy nginx configure 
+      template: 
+        src: nginx.conf.j2
+        dest: /etc/nginx/conf.d/test.conf
+        owner: root
+        group: root
+        mode: '0644'
+      when: web_server == "nginx" or website == "demo.sothy.site"
+
+    - name: Copy index.html
+      copy: 
+        src: /Users/sothy.lorn/index.html
+        dest: /var/www/html/index.html
+      notify: restart nginx
+
+  handlers:
+    - name: restart nginx
+      service: 
+        name: "{{ web_server }}"
+        state: restarted

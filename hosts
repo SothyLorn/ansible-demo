@@ -1,0 +1,30 @@
+localhost ansible_connection=local 
+
+[employee:children]
+dev
+uat
+production
+
+[dev]
+dev-1 ansible_host=165.245.179.152
+dev-2 ansible_host=139.59.224.94
+
+[uat]
+uat-1 ansible_host=165.245.179.152
+uat-2 ansible_host=139.59.224.94
+
+[production]
+prod-1 ansible_host=165.245.179.152
+prod-2 ansible_host=139.59.224.94
+
+[nginx]
+nginx-01 ansible_host=167.172.95.7 ansible_ssh_user=devops 
+nginx-02 ansible_host=103.253.145.16 ansible_ssh_user=devops 
+nginx-03 ansible_host=165.22.99.29 ansible_ssh_user=devops 
+
+[jenkins]
+jenkins-demo ansible_host=165.245.179.152
+jenkins-server ansible_host=139.59.224.94
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3

@@ -1,0 +1,8 @@
+- hosts: localhost
+  gather_facts: true
+  vars_files: 
+    - 4.secret.yml
+  tasks:
+    - name: print secret value 
+      debug:
+        msg: "{{ secret_value }}"
