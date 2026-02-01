@@ -9,8 +9,10 @@ RUN: ```ansible-playbook 0.droplet.yml -i ansible/hosts```
 RUN: ```ansible-playbook 1.print.yml -i ansible/hosts```
 
 3. Create user devops
+
 Update File: ```files/authorized_keys/devops.keys``` 
   => copy your laptop ssh key to this file
+  
 Update File: ```hosts```
   => add you server ip address that you want to create user to host file 
 
