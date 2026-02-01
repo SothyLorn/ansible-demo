@@ -1,3 +1,4 @@
+git clone ```https://github.com/SothyLorn/ansible-demo.git```
 1. create droplet
 Update FILE: ```0.droplet.yml```
 - api_token
